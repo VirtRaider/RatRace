@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://c3qbsbe56skfn"]
+[gd_scene load_steps=10 format=3 uid="uid://c3qbsbe56skfn"]
 
 [ext_resource type="Texture2D" uid="uid://u8vma1tah06p" path="res://background.jpg" id="1_e0ysv"]
 [ext_resource type="Script" path="res://player.gd" id="2_rbo3c"]
@@ -6,6 +6,11 @@
 [ext_resource type="PackedScene" uid="uid://c2eme32qh570b" path="res://laser.tscn" id="4_unewu"]
 [ext_resource type="PackedScene" uid="uid://cyjieop4wmhs5" path="res://enemy.tscn" id="5_0fp7h"]
 [ext_resource type="Script" path="res://enemySpawner.gd" id="6_boqqx"]
+[ext_resource type="Script" path="res://timer.gd" id="7_64fcd"]
+[ext_resource type="Script" path="res://scorelabel.gd" id="7_hkt4s"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_67nj8"]
+font_size = 36
 
 [node name="Main" type="Node2D"]
 
@@ -25,7 +30,19 @@ metadata/_edit_group_ = true
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("3_8j20p")
 
-[node name="Enemy" parent="." instance=ExtResource("5_0fp7h")]
-
 [node name="EnemySpawner" type="Node2D" parent="."]
 script = ExtResource("6_boqqx")
+enemy_tscn = ExtResource("5_0fp7h")
+
+[node name="Timer" type="Timer" parent="EnemySpawner"]
+autostart = true
+script = ExtResource("7_64fcd")
+
+[node name="ScoreLabel" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Score : 0"
+label_settings = SubResource("LabelSettings_67nj8")
+script = ExtResource("7_hkt4s")
+
+[connection signal="timeout" from="EnemySpawner/Timer" to="EnemySpawner" method="spawn_enemy_ship"]

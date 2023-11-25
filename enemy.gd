@@ -11,3 +11,6 @@ func _process(delta):
 func _on_area_entered(area):
 	#laser destory enemy
 	self.queue_free()
+	
+	#Increase Score
+	GameState.score_increase()
